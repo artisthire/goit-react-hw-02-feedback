@@ -20,19 +20,14 @@ class App extends Component {
   );
 
   countTotalFeedback = () => {
-    return Object.values(this.state).reduce((summ, cur) => summ + cur, 0);
+    return Object.values(this.state).reduce((summ, value) => summ + value, 0);
   };
 
   countPositiveFeedbackPercentage = () => {
     const totalFeedback = this.countTotalFeedback();
     const positiveFeedbackCount = Object.entries(this.state).reduce(
-      (summ, [name, value]) => {
-        if (POSITIVE_FEEDBACK_NAMES.includes(name)) {
-          return summ + value;
-        }
-
-        return summ;
-      },
+      (summ, [feedbackName, value]) =>
+        POSITIVE_FEEDBACK_NAMES.includes(feedbackName) ? summ + value : summ,
       0
     );
 
@@ -44,7 +39,7 @@ class App extends Component {
     return percentage + '%';
   };
 
-  handleClick = feedbackName => {
+  handleLeaveFeedback = feedbackName => {
     return () => {
       this.setState(prevState => ({
         [feedbackName]: prevState[feedbackName] + 1,
@@ -62,7 +57,7 @@ class App extends Component {
           <Section title="Please leave feedback">
             <FeedbackOptions
               options={FEEDBACK_DATA}
-              onLeaveFeedback={this.handleClick}
+              onLeaveFeedback={this.handleLeaveFeedback}
             />
           </Section>
           <Section title="Statistics">

@@ -19,7 +19,7 @@ export const Button = styled.button`
   text-transform: capitalize;
   cursor: pointer;
 
-  background-color: ${props => (props.bgColor ? props.bgColor : '#e9e9e9')};
+  background-color: ${({ bgColor }) => bgColor || '#e9e9e9'};
 `;
 
 Button.propTypes = {
