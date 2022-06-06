@@ -5,7 +5,12 @@ function FeedbackOptions({ options, onLeaveFeedback }) {
   return (
     <Controls>
       {options.map(({ name, bgColor = '' }) => (
-        <Button key={name} bgColor={bgColor} onClick={onLeaveFeedback(name)}>
+        <Button
+          type="button"
+          key={name}
+          bgColor={bgColor}
+          onClick={onLeaveFeedback(name)}
+        >
           {name}
         </Button>
       ))}

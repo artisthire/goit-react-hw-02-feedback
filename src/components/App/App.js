@@ -19,11 +19,19 @@ class App extends Component {
     {}
   );
 
-  countTotalFeedback = () => {
-    return Object.values(this.state).reduce((summ, value) => summ + value, 0);
+  handleLeaveFeedback = feedbackName => {
+    return () => {
+      this.setState(prevState => ({
+        [feedbackName]: prevState[feedbackName] + 1,
+      }));
+    };
   };
 
-  countPositiveFeedbackPercentage = () => {
+  countTotalFeedback() {
+    return Object.values(this.state).reduce((summ, value) => summ + value, 0);
+  }
+
+  countPositiveFeedbackPercentage() {
     const totalFeedback = this.countTotalFeedback();
     const positiveFeedbackCount = Object.entries(this.state).reduce(
       (summ, [feedbackName, value]) =>
@@ -37,15 +45,7 @@ class App extends Component {
         : 0;
 
     return percentage + '%';
-  };
-
-  handleLeaveFeedback = feedbackName => {
-    return () => {
-      this.setState(prevState => ({
-        [feedbackName]: prevState[feedbackName] + 1,
-      }));
-    };
-  };
+  }
 
   render() {
     const totalFeedback = this.countTotalFeedback();
