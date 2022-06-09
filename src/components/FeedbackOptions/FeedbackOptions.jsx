@@ -4,13 +4,8 @@ import { Controls, Button } from './FeedbackOptions.styled';
 function FeedbackOptions({ options, onLeaveFeedback }) {
   return (
     <Controls>
-      {options.map(({ name, bgColor = '' }) => (
-        <Button
-          type="button"
-          key={name}
-          bgColor={bgColor}
-          onClick={onLeaveFeedback(name)}
-        >
+      {options.map(name => (
+        <Button type="button" key={name} onClick={onLeaveFeedback(name)}>
           {name}
         </Button>
       ))}
@@ -19,12 +14,7 @@ function FeedbackOptions({ options, onLeaveFeedback }) {
 }
 
 FeedbackOptions.propTypes = {
-  options: PropTypes.arrayOf(
-    PropTypes.exact({
-      name: PropTypes.string.isRequired,
-      bgColor: PropTypes.string,
-    })
-  ).isRequired,
+  options: PropTypes.arrayOf(PropTypes.string).isRequired,
   onLeaveFeedback: PropTypes.func.isRequired,
 };
 

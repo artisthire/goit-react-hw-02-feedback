@@ -5,7 +5,7 @@ function Statistics({ options, total, positivePercentage }) {
   return (
     <Table>
       <tbody>
-        {Object.entries(options).map(([name, value]) => (
+        {options.map(([name, value]) => (
           <tr key={name}>
             <th scope="row">{name}:</th>
             <td>{value}</td>
@@ -27,7 +27,9 @@ function Statistics({ options, total, positivePercentage }) {
 }
 
 Statistics.propTypes = {
-  options: PropTypes.objectOf(PropTypes.number).isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number]))
+  ).isRequired,
   total: PropTypes.number.isRequired,
   positivePercentage: PropTypes.string.isRequired,
 };

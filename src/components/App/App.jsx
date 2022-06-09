@@ -5,19 +5,12 @@ import FeedbackOptions from 'components/FeedbackOptions';
 import Statistics from 'components/Statistics';
 import Notification from 'components/Notification';
 
-const FEEDBACK_DATA = [
-  { name: 'good', bgColor: '#77ef77' },
-  { name: 'neutral', bgColor: '#f3f31c' },
-  { name: 'bad', bgColor: '#f54343' },
-];
-
-const POSITIVE_FEEDBACK_NAMES = ['good'];
-
 class App extends Component {
-  state = FEEDBACK_DATA.reduce(
-    (obj, current) => ({ ...obj, [current.name]: 0 }),
-    {}
-  );
+  state = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
 
   handleLeaveFeedback = feedbackName => {
     return () => {
@@ -35,13 +28,13 @@ class App extends Component {
     const totalFeedback = this.countTotalFeedback();
     const positiveFeedbackCount = Object.entries(this.state).reduce(
       (summ, [feedbackName, value]) =>
-        POSITIVE_FEEDBACK_NAMES.includes(feedbackName) ? summ + value : summ,
+        feedbackName === 'good' ? summ + value : summ,
       0
     );
 
     const percentage =
       positiveFeedbackCount > 0
-        ? Math.round((positiveFeedbackCount / totalFeedback) * 1000) / 10
+        ? Math.round((positiveFeedbackCount / totalFeedback) * 100)
         : 0;
 
     return percentage + '%';
@@ -56,20 +49,20 @@ class App extends Component {
         <Container>
           <Section title="Please leave feedback">
             <FeedbackOptions
-              options={FEEDBACK_DATA}
+              options={Object.keys(this.state)}
               onLeaveFeedback={this.handleLeaveFeedback}
             />
           </Section>
           <Section title="Statistics">
-            {totalFeedback > 0 ? (
+            {totalFeedback > 0 && (
               <Statistics
-                options={this.state}
+                options={Object.entries(this.state)}
                 total={totalFeedback}
                 positivePercentage={positivePercentage}
               />
-            ) : (
-              <Notification message="There is no feedback" />
             )}
+
+            {!totalFeedback && <Notification message="There is no feedback" />}
           </Section>
         </Container>
       </Wrapper>
