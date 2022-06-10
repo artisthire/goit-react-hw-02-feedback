@@ -43,20 +43,22 @@ class App extends Component {
   render() {
     const totalFeedback = this.countTotalFeedback();
     const positivePercentage = this.countPositiveFeedbackPercentage();
+    const feedbackBtns = Object.keys(this.state);
+    const statisticData = Object.entries(this.state);
 
     return (
       <Wrapper>
         <Container>
           <Section title="Please leave feedback">
             <FeedbackOptions
-              options={Object.keys(this.state)}
+              options={feedbackBtns}
               onLeaveFeedback={this.handleLeaveFeedback}
             />
           </Section>
           <Section title="Statistics">
             {totalFeedback > 0 && (
               <Statistics
-                options={Object.entries(this.state)}
+                options={statisticData}
                 total={totalFeedback}
                 positivePercentage={positivePercentage}
               />
